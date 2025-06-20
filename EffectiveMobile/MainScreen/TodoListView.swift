@@ -28,10 +28,32 @@ class TodoListVC: UIViewController, ToDoListViewProtocol {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
         l.isHidden = true
-        l.textColor = .green
+        l.textColor = .label
         return l
     }()
+    private var footer: UIView = {
+        let v = UIView()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        v.backgroundColor = .systemGray6
+        return v
+    }()
+    private var newTodoBtn: UIButton = {
+        var btn = UIButton()
+        let symbolConfig = UIImage.SymbolConfiguration(pointSize: 22, weight: .medium)
+        btn.translatesAutoresizingMaskIntoConstraints = false
+        btn.setImage(UIImage(systemName: "square.and.pencil", withConfiguration: symbolConfig), for: .normal)
+        btn.tintColor = .systemYellow
+        return btn
+    }()
     
+    private var taskCountLbl: UILabel = {
+        var lbl = UILabel()
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        lbl.textColor = .label
+        lbl.text = "7 Задач"
+        lbl.textAlignment = .center
+        return lbl
+    }()
     private var searchController: UISearchController = UISearchController()
     var todos: TodoListModel?
     
@@ -42,7 +64,10 @@ class TodoListVC: UIViewController, ToDoListViewProtocol {
         setupSearchController()
         setupErrorLbl()
         setupTableView()
-
+        setupFooter()
+        setupCreateNewTodoBtn()
+        setupTaskCounterLbl()
+        
         
     }
     
@@ -51,10 +76,6 @@ class TodoListVC: UIViewController, ToDoListViewProtocol {
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.largeTitleDisplayMode = .always
     }
-    
-
-    
-    
     
     private func setupErrorLbl() {
         view.addSubview(errorLbl)
@@ -67,8 +88,39 @@ class TodoListVC: UIViewController, ToDoListViewProtocol {
         ])
     }
     
+    private func setupFooter() {
+        view.addSubview(footer)
+        NSLayoutConstraint.activate([
+            footer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            footer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footer.heightAnchor.constraint(equalToConstant: 83)
+        ])
+    }
+    
+    private func setupCreateNewTodoBtn() {
+        footer.addSubview(newTodoBtn)
+        
+        NSLayoutConstraint.activate([
+            newTodoBtn.trailingAnchor.constraint(equalTo: footer.trailingAnchor),
+            newTodoBtn.widthAnchor.constraint(equalToConstant: 68),
+            newTodoBtn.heightAnchor.constraint(equalToConstant: 44),
+            newTodoBtn.topAnchor.constraint(equalTo: footer.topAnchor, constant: 5)
+        ])
+    }
+    
+    private func setupTaskCounterLbl() {
+        footer.addSubview(taskCountLbl)
+        NSLayoutConstraint.activate([
+            taskCountLbl.centerXAnchor.constraint(equalTo: footer.centerXAnchor),
+            taskCountLbl.topAnchor.constraint(equalTo: footer.topAnchor, constant: 20),
+            taskCountLbl.widthAnchor.constraint(equalToConstant: 200),
+            taskCountLbl.heightAnchor.constraint(equalToConstant: 20)
+        ])
+    }
+    
     //MARK: protocol methods
-
+    
     func update(with todos: TodoListModel?) {
         DispatchQueue.main.async {
             self.todos = todos

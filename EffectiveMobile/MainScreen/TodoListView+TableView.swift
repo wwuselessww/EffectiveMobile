@@ -21,7 +21,7 @@ extension TodoListVC: UITableViewDelegate, UITableViewDataSource {
     
     internal func setupTableView() {
         view.addSubview(table)
-        table.backgroundColor = .blue
+        table.backgroundColor = .systemBackground
         table.delegate = self
         table.dataSource = self
         NSLayoutConstraint.activate([
