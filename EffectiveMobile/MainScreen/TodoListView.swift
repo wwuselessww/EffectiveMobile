@@ -19,7 +19,7 @@ class TodoListVC: UIViewController, ToDoListViewProtocol {
     internal var table: UITableView = {
         var t = UITableView()
         t.translatesAutoresizingMaskIntoConstraints = false
-        t.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        t.register(ToDoCell.self, forCellReuseIdentifier: ToDoCell.identifier)
         t.isHidden = true
         return t
     }()
@@ -31,7 +31,7 @@ class TodoListVC: UIViewController, ToDoListViewProtocol {
         l.textColor = .label
         return l
     }()
-    private var footer: UIView = {
+    internal var footer: UIView = {
         let v = UIView()
         v.translatesAutoresizingMaskIntoConstraints = false
         v.backgroundColor = .systemGray6
@@ -63,10 +63,11 @@ class TodoListVC: UIViewController, ToDoListViewProtocol {
         setupNavigationBar()
         setupSearchController()
         setupErrorLbl()
-        setupTableView()
+        
         setupFooter()
         setupCreateNewTodoBtn()
         setupTaskCounterLbl()
+        setupTableView()
         
         
     }
