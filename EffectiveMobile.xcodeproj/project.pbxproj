@@ -14,7 +14,7 @@
 		A25605712E056A7100776731 /* Exceptions for "EffectiveMobile" folder in "EffectiveMobile" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Info.plist,
+				Resources/Info.plist,
 			);
 			target = A256055E2E056A7000776731 /* EffectiveMobile */;
 		};
@@ -147,7 +147,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VFG5U3NL5K;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = EffectiveMobile/Info.plist;
+				INFOPLIST_FILE = EffectiveMobile/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -179,7 +179,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VFG5U3NL5K;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = EffectiveMobile/Info.plist;
+				INFOPLIST_FILE = EffectiveMobile/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
