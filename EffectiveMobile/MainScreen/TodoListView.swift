@@ -9,7 +9,7 @@ import UIKit
 protocol ToDoListViewProtocol: AnyObject {
     var presenter: ToDoListPresenterProtocol? { get set }
     
-    func update(with todos: TodoListModel?)
+    func update(with todos: TodoListViewModel?)
     func update(with error: String)
 }
 

@@ -30,7 +30,17 @@ class TodoListPresenter: ToDoListPresenterProtocol {
     func interactorDidFetchTodos(with result: Result<TodoListModel, Error>) {
         switch result {
         case.success(let todoModel):
-            view?.update(with: todoModel)
+            var todos = todoModel.todos.map { todo in
+                TodoViewModel(
+                    title: todo.title ?? "Task Title" ,
+                    image: todo.completed ? "checkmark.circle" : "circle",
+                    body: todo.todo,
+                    date: todo.date ?? Date.now
+                )
+            }
+            var todoListViewModel: TodoListViewModel = TodoListViewModel(todos: todos, totalCount: todos.count)
+            
+            view?.update(with: todoListViewModel)
         case.failure:
             view?.update(with: "Something went wrong")
         }

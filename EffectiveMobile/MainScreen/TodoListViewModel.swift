@@ -7,6 +7,11 @@
 
 import Foundation
 
+struct TodoListViewModel {
+    var todos: [TodoViewModel]
+    var totalCount: Int
+}
+
 struct TodoViewModel {
     var title: String
     var image: String
