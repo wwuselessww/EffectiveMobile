@@ -31,7 +31,10 @@ extension TodoListVC: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         guard let todos = todos else { return cell }
-        cell.bodyLbl.text = todos.todos[indexPath.row].todo
+        var todo = todos.todos[indexPath.row]
+        cell.bodyLbl.text = todo.body
+        cell.titleLbl.text = todo.title
+        cell.doneBtn.setImage(UIImage(systemName: todo.image), for: .normal)
         cell.delegate = self
         return cell
     }

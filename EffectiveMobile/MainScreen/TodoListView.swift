@@ -14,8 +14,7 @@ protocol ToDoListViewProtocol: AnyObject {
 }
 
 class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
-    
-    
+
     var presenter: ToDoListPresenterProtocol?
     
     internal var table: UITableView = {
@@ -57,7 +56,7 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
         return lbl
     }()
     private var searchController: UISearchController = UISearchController()
-    var todos: TodoListModel?
+    var todos: TodoListViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,7 +123,7 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
     
     //MARK: protocol methods
     
-    func update(with todos: TodoListModel?) {
+    func update(with todos: TodoListViewModel?) {
         DispatchQueue.main.async {
             self.todos = todos
             self.table.reloadData()
