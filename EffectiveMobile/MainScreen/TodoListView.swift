@@ -128,6 +128,8 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
             self.todos = todos
             self.table.reloadData()
             self.table.isHidden = false
+            guard let todos else { return }
+            self.taskCountLbl.text = String("\(todos.totalCount) Задач")
         }
     }
     
@@ -137,6 +139,7 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
             self.errorLbl.isHidden = false
             self.table.isHidden = true
             self.todos = nil
+            self.taskCountLbl.text = ""
         }
     }
     
