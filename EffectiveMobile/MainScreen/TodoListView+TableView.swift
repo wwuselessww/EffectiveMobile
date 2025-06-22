@@ -32,6 +32,7 @@ extension TodoListVC: UITableViewDelegate, UITableViewDataSource {
         }
         guard let todos = todos else { return cell }
         cell.bodyLbl.text = todos.todos[indexPath.row].todo
+        cell.delegate = self
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

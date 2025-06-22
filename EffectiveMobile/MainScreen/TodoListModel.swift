@@ -20,4 +20,6 @@ struct TodoModel: Decodable {
     var todo: String
     var completed: Bool
     var userId: Int
+    var title: String?
+    var date: Date?
 }

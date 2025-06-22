@@ -6,9 +6,14 @@
 //
 
 import UIKit
+protocol ToDoCellDelegate {
+    func didTapCheckbox(for cell: ToDoCell)
+}
+
 
 class ToDoCell: UITableViewCell {
     static let identifier = "ToDoCell"
+    var delegate: ToDoCellDelegate?
     var titleLbl: UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
@@ -45,8 +50,10 @@ class ToDoCell: UITableViewCell {
         btn.translatesAutoresizingMaskIntoConstraints = false
         btn.setImage(UIImage(systemName: "circle"), for: .normal)
         btn.tintColor = .secondaryLabel
+        
         return btn
     }()
+    var model: TodoModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -54,6 +61,7 @@ class ToDoCell: UITableViewCell {
         setupTitleLbl()
         setupBodyLbl()
         setupDateLbl()
+        doneBtn.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -99,6 +107,12 @@ class ToDoCell: UITableViewCell {
             dateLbl.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12)
         ])
     }
+    
+    @objc private func didTapButton(sender: UIButton) {
+        delegate?.didTapCheckbox(for: self)
+    }
+    
+    
     
     
     

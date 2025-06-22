@@ -13,6 +13,7 @@ protocol ToDoListPresenterProtocol: AnyObject {
     var view: ToDoListViewProtocol? {get set}
     
     func interactorDidFetchTodos(with result: Result<TodoListModel, Error>)
+    func didTapDone(at indexPath: IndexPath)
 }
 
 class TodoListPresenter: ToDoListPresenterProtocol {
@@ -33,5 +34,9 @@ class TodoListPresenter: ToDoListPresenterProtocol {
         case.failure:
             view?.update(with: "Something went wrong")
         }
+    }
+    
+    func didTapDone(at indexPath: IndexPath) {
+        interactor?.handleDoneTap(at: indexPath)
     }
 }

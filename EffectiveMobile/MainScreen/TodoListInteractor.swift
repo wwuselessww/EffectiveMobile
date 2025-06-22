@@ -17,6 +17,7 @@ enum FetchError: Error {
 protocol ToDoListInteractorProtocol: AnyObject {
     var presenter: ToDoListPresenterProtocol? { get set }
     func getToDos()
+    func handleDoneTap(at indexPath: IndexPath)
 }
 class TodoListInteractor: ToDoListInteractorProtocol {
    weak var presenter: ToDoListPresenterProtocol?
@@ -38,6 +39,11 @@ class TodoListInteractor: ToDoListInteractorProtocol {
             }
         }
         task.resume()
+    }
+    
+    func handleDoneTap(at indexPath: IndexPath) {
+        //update completion state in coredata
+        print("hehe\(indexPath.row)")
     }
     
     

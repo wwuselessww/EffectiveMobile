@@ -13,7 +13,9 @@ protocol ToDoListViewProtocol: AnyObject {
     func update(with error: String)
 }
 
-class TodoListVC: UIViewController, ToDoListViewProtocol {
+class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
+    
+    
     var presenter: ToDoListPresenterProtocol?
     
     internal var table: UITableView = {
@@ -136,6 +138,12 @@ class TodoListVC: UIViewController, ToDoListViewProtocol {
             self.errorLbl.isHidden = false
             self.table.isHidden = true
             self.todos = nil
+        }
+    }
+    
+    func didTapCheckbox(for cell: ToDoCell) {
+        if let indexPath = table.indexPath(for: cell) {
+            presenter?.didTapDone(at: indexPath)
         }
     }
 }
