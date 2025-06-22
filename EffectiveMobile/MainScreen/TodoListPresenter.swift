@@ -30,15 +30,19 @@ class TodoListPresenter: ToDoListPresenterProtocol {
     func interactorDidFetchTodos(with result: Result<TodoListModel, Error>) {
         switch result {
         case.success(let todoModel):
-            var todos = todoModel.todos.map { todo in
-                TodoViewModel(
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            let todos = todoModel.todos.map { todo in
+                let date = todo.date ?? Date.now
+                return TodoViewModel(
                     title: todo.title ?? "Task Title" ,
                     image: todo.completed ? "checkmark.circle" : "circle",
                     body: todo.todo,
-                    date: todo.date ?? Date.now
+                    date: dateFormatter.string(from: date),
+                    btnColor: todo.completed ? .systemYellow : .secondaryLabel
                 )
             }
-            var todoListViewModel: TodoListViewModel = TodoListViewModel(todos: todos, totalCount: todos.count)
+            let todoListViewModel: TodoListViewModel = TodoListViewModel(todos: todos, totalCount: todos.count)
             
             view?.update(with: todoListViewModel)
         case.failure:

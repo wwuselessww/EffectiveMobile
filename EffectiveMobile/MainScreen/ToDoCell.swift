@@ -53,7 +53,6 @@ class ToDoCell: UITableViewCell {
         
         return btn
     }()
-    var model: TodoModel?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -112,6 +111,13 @@ class ToDoCell: UITableViewCell {
         delegate?.didTapCheckbox(for: self)
     }
     
+    func configure(with viewModel: TodoViewModel) {
+        titleLbl.text = viewModel.title
+        bodyLbl.text = viewModel.body
+        dateLbl.text = viewModel.date
+        doneBtn.setImage(UIImage(systemName: viewModel.image), for: .normal)
+        doneBtn.tintColor = viewModel.btnColor
+    }
     
     
     
