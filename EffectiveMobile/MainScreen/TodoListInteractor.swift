@@ -18,9 +18,10 @@ protocol ToDoListInteractorProtocol: AnyObject {
     var presenter: ToDoListPresenterProtocol? { get set }
     func getToDos()
     func handleDoneTap(at indexPath: IndexPath)
-    func handleCreateNewTodoTapButton()
+    
 }
 class TodoListInteractor: ToDoListInteractorProtocol {
+   
    weak var presenter: ToDoListPresenterProtocol?
     
     func getToDos() {
@@ -43,12 +44,7 @@ class TodoListInteractor: ToDoListInteractorProtocol {
     }
     
     func handleDoneTap(at indexPath: IndexPath) {
-        //update completion state in coredata
-        print("hehe\(indexPath.row)")
-    }
-    
-    func handleCreateNewTodoTapButton() {
-        print("create new todo")
+        //handle done 
     }
     
     

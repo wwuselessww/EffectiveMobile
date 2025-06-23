@@ -6,24 +6,24 @@
 //
 
 import UIKit
-typealias ToDoEntryPoint = ToDoListViewProtocol & UIViewController
+typealias ToDoListEntryPoint = ToDoListViewProtocol & UIViewController
 
 protocol ToDoListRouterProtocol: AnyObject {
-    var entry: ToDoEntryPoint? { get }
+    var entry: ToDoListEntryPoint? { get }
     static func start() -> ToDoListRouterProtocol
     func navigateToCreateNewToDo(from view: UIViewController)
+    func navigateToDetail(from view: UIViewController, viewModel: TodoViewModel)
 }
 
 class TodoListRouter: ToDoListRouterProtocol {
     
-    
-    var entry: ToDoEntryPoint?
+    var entry: ToDoListEntryPoint?
     
     static func start() -> ToDoListRouterProtocol {
         let router = TodoListRouter()
-        var view: (ToDoListViewProtocol)? = TodoListVC()
-        var presenter: ToDoListPresenterProtocol = TodoListPresenter()
-        var interactor: ToDoListInteractorProtocol = TodoListInteractor()
+        let view: (ToDoListViewProtocol)? = TodoListVC()
+        let presenter: ToDoListPresenterProtocol = TodoListPresenter()
+        let interactor: ToDoListInteractorProtocol = TodoListInteractor()
         
         view?.presenter = presenter
         interactor.presenter = presenter
@@ -32,12 +32,26 @@ class TodoListRouter: ToDoListRouterProtocol {
         presenter.router = router
         presenter.view = view
         
-        router.entry = view as? ToDoEntryPoint
+        router.entry = view as? ToDoListEntryPoint
         return router
     }
     
     func navigateToCreateNewToDo(from view: UIViewController) {
         //navigate to the second view
+        guard let todoVC = TodoRouter.start( ).todoEntryPoint else {
+        print("no todo vc")
+            return
+        }
+        view.navigationController?.pushViewController(todoVC, animated: true)
+    }
+    
+    func navigateToDetail(from view: UIViewController, viewModel: TodoViewModel) {
+        guard let todoVC = TodoRouter.start( viewModel).todoEntryPoint else {
+            print("no todo view")
+            return
+        }
+        view.navigationController?.pushViewController(todoVC, animated: true)
+        
     }
     
     
