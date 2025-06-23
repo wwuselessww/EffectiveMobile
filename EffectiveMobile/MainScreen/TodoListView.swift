@@ -102,7 +102,7 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
     
     private func setupCreateNewTodoBtn() {
         footer.addSubview(newTodoBtn)
-        
+        newTodoBtn.addTarget(self, action: #selector(tapNewNoteBtn), for: .touchUpInside)
         NSLayoutConstraint.activate([
             newTodoBtn.trailingAnchor.constraint(equalTo: footer.trailingAnchor),
             newTodoBtn.widthAnchor.constraint(equalToConstant: 68),
@@ -119,6 +119,11 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
             taskCountLbl.widthAnchor.constraint(equalToConstant: 200),
             taskCountLbl.heightAnchor.constraint(equalToConstant: 20)
         ])
+    }
+    
+    @objc func tapNewNoteBtn(_ sender: UIButton) {
+        print("ejej")
+        presenter?.didTapCreateNewTodo()
     }
     
     //MARK: protocol methods
@@ -148,6 +153,8 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
             presenter?.didTapDone(at: indexPath)
         }
     }
+    
+    
 }
 
 

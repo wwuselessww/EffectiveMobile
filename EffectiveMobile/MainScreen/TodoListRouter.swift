@@ -11,9 +11,12 @@ typealias ToDoEntryPoint = ToDoListViewProtocol & UIViewController
 protocol ToDoListRouterProtocol: AnyObject {
     var entry: ToDoEntryPoint? { get }
     static func start() -> ToDoListRouterProtocol
+    func navigateToCreateNewToDo(from view: UIViewController)
 }
 
 class TodoListRouter: ToDoListRouterProtocol {
+    
+    
     var entry: ToDoEntryPoint?
     
     static func start() -> ToDoListRouterProtocol {
@@ -31,6 +34,10 @@ class TodoListRouter: ToDoListRouterProtocol {
         
         router.entry = view as? ToDoEntryPoint
         return router
+    }
+    
+    func navigateToCreateNewToDo(from view: UIViewController) {
+        //navigate to the second view
     }
     
     

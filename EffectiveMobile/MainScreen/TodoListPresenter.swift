@@ -14,6 +14,7 @@ protocol ToDoListPresenterProtocol: AnyObject {
     
     func interactorDidFetchTodos(with result: Result<TodoListModel, Error>)
     func didTapDone(at indexPath: IndexPath)
+    func didTapCreateNewTodo()
 }
 
 class TodoListPresenter: ToDoListPresenterProtocol {
@@ -52,5 +53,9 @@ class TodoListPresenter: ToDoListPresenterProtocol {
     
     func didTapDone(at indexPath: IndexPath) {
         interactor?.handleDoneTap(at: indexPath)
+    }
+    
+    func didTapCreateNewTodo() {
+        print("new todo")
     }
 }
