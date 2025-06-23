@@ -58,14 +58,17 @@ class TodoView: UIViewController, TodoViewProtocol {
     }
     
     private func setupNavigationBar() {
-        let backBtn = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(tapBackButton))
-        backBtn.tintColor = .systemYellow
+        let button = UIButton(type: .system)
+        button.setTitle("Назад", for: .normal)
+        button.setImage(UIImage(systemName: "chevron.left"), for: .normal)
+        button.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
+        button.tintColor = .systemYellow
+        let backBtn = UIBarButtonItem(customView: button)
         navigationItem.leftBarButtonItem = backBtn
     }
     
     private func setupDate() {
         view.addSubview(dateLbl)
-//        dateLbl.backgroundColor = .blue
         dateLbl.text = presenter?.viewModel?.date
         NSLayoutConstraint.activate([
             dateLbl.topAnchor.constraint(equalTo: titleField.bottomAnchor, constant: 8),
@@ -77,7 +80,6 @@ class TodoView: UIViewController, TodoViewProtocol {
     
     private func setupBody() {
         view.addSubview(bodyTextView)
-//        bodyTextView.backgroundColor = .red
         bodyTextView.text = presenter?.viewModel?.body
         NSLayoutConstraint.activate([
             bodyTextView.topAnchor.constraint(equalTo: dateLbl.bottomAnchor, constant: 16),
