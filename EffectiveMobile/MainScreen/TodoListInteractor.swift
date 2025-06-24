@@ -16,15 +16,19 @@ enum FetchError: Error {
 //https://dummyjson.com/todos
 protocol ToDoListInteractorProtocol: AnyObject {
     var presenter: ToDoListPresenterProtocol? { get set }
-    func getToDos()
+    func getToDosFromAPI()
+    func getTodosFromCoreData()
     func handleDoneTap(at indexPath: IndexPath)
-    
 }
 class TodoListInteractor: ToDoListInteractorProtocol {
+    
+    
+    
+    
    
    weak var presenter: ToDoListPresenterProtocol?
     
-    func getToDos() {
+    func getToDosFromAPI() {
         let url = URL(string: "https://dummyjson.com/todos")!
         let task = URLSession.shared.dataTask(with: URLRequest(url: url)) { [weak self] data, _, error in
             guard let data = data, error == nil else {
@@ -43,9 +47,11 @@ class TodoListInteractor: ToDoListInteractorProtocol {
         task.resume()
     }
     
+    func getTodosFromCoreData() {
+        CoreDataManager.shared.fetchTodos()
+    }
+    
     func handleDoneTap(at indexPath: IndexPath) {
         //handle done 
     }
-    
-    
 }

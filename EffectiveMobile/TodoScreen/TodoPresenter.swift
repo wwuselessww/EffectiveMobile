@@ -12,7 +12,7 @@ protocol TodoPresenterProtocol: AnyObject {
     var interactor: TodoInteractorProtocol? {get set}
     var view: TodoViewProtocol? {get set}
     var viewModel: TodoViewModel? {get set}
-    func navigateBack()
+    func didTapBack(title: String, body: String)
 }
 
 class TodoPresenter: TodoPresenterProtocol {
@@ -21,7 +21,15 @@ class TodoPresenter: TodoPresenterProtocol {
     var interactor: TodoInteractorProtocol?
     weak var view: TodoViewProtocol?
     
-    func navigateBack() {
+    func didTapBack(title: String, body: String) {
+        if viewModel == nil {
+            interactor?.handleSavingTodo(title: title, body: body)
+            print("save")
+        } else {
+//            interactor?.handleEditTodo(title: title, body: body)
+            print("edit")
+            
+        }
         router?.navigateBack()
     }
 }

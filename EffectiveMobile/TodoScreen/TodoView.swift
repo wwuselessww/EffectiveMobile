@@ -23,6 +23,7 @@ class TodoView: UIViewController, TodoViewProtocol {
     var titleField: UITextField = {
         var t = UITextField()
         t.translatesAutoresizingMaskIntoConstraints = false
+        t.placeholder = "Название задачи"
         t.textColor = .label
         t.font = UIFont.systemFont(ofSize: 34)
         t.text = "Kekekeke"
@@ -32,7 +33,8 @@ class TodoView: UIViewController, TodoViewProtocol {
     var bodyTextView: UITextView = {
         var tv = UITextView()
         tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.textColor = .label
+        tv.text = "Текст задачи..."
+        tv.textColor = .lightGray
         tv.font = UIFont.systemFont(ofSize: 16)
         return tv
     }()
@@ -47,7 +49,7 @@ class TodoView: UIViewController, TodoViewProtocol {
     
     private func setupTitle() {
         view.addSubview(titleField)
-//        titleField.backgroundColor = .yellow
+        titleField.delegate = self
         titleField.text = presenter?.viewModel?.title
         NSLayoutConstraint.activate([
             titleField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
@@ -80,7 +82,15 @@ class TodoView: UIViewController, TodoViewProtocol {
     
     private func setupBody() {
         view.addSubview(bodyTextView)
-        bodyTextView.text = presenter?.viewModel?.body
+        bodyTextView.delegate = self
+        
+        if let body = presenter?.viewModel?.body {
+            bodyTextView.text = body
+        } else {
+            bodyTextView.text = "Текст задачи..."
+        }
+        
+        print(presenter?.viewModel)
         NSLayoutConstraint.activate([
             bodyTextView.topAnchor.constraint(equalTo: dateLbl.bottomAnchor, constant: 16),
             bodyTextView.leadingAnchor.constraint(equalTo: titleField.leadingAnchor),
@@ -91,6 +101,6 @@ class TodoView: UIViewController, TodoViewProtocol {
     @objc private func tapBackButton() {
         dismiss(animated: true)
         print("tapped back")
-        presenter?.navigateBack()
+        presenter?.didTapBack(title: titleField.text ?? "", body: bodyTextView.text ?? "")
     }
 }
