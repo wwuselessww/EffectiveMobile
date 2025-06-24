@@ -26,7 +26,8 @@ class TodoListPresenter: ToDoListPresenterProtocol {
     weak var view: ToDoListViewProtocol?
     var interactor: ToDoListInteractorProtocol? {
         didSet {
-            interactor?.getToDos()
+            interactor?.getToDosFromAPI()
+            interactor?.getTodosFromCoreData()
         }
     }
     
