@@ -14,7 +14,7 @@ protocol ToDoListPresenterProtocol: AnyObject {
     var view: ToDoListViewProtocol? {get set}
     var viewModel: TodoListViewModel? {get set}
     
-    func interactorDidFetchTodos(with result: Result<TodoListModel, Error>)
+    func interactorDidFetchTodos(with result: Result<[TaskEntity], Error>)
     func didTapDone(at indexPath: IndexPath)
     func didTapCreateNewTodo()
     func didTapOnCell(at indexPath: IndexPath)
@@ -26,32 +26,37 @@ class TodoListPresenter: ToDoListPresenterProtocol {
     weak var view: ToDoListViewProtocol?
     var interactor: ToDoListInteractorProtocol? {
         didSet {
-            interactor?.getToDosFromAPI()
-            interactor?.getTodosFromCoreData()
+//            interactor?.getToDosFromAPI()
+            interactor?.checkForFirstLaunch()
+//            interactor?.getTodosFromCoreData()
         }
     }
     
    
     
-    func interactorDidFetchTodos(with result: Result<TodoListModel, Error>) {
+    func interactorDidFetchTodos(with result: Result<[TaskEntity], Error>) {
+        print("enter")
         switch result {
         case.success(let todoModel):
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd/MM/yyyy"
-            let todos = todoModel.todos.map { todo in
-                let date = todo.date ?? Date.now
+            let todos = todoModel.map { todo in
+                let date = Date.now
+//                print("1")
                 return TodoViewModel(
                     title: todo.title ?? "Task Title" ,
                     image: todo.completed ? "checkmark.circle" : "circle",
-                    body: todo.todo,
+                    body: todo.bodyText ?? "no body????",
                     date: dateFormatter.string(from: date),
                     btnColor: todo.completed ? .systemYellow : .secondaryLabel
                 )
             }
             let todoListViewModel: TodoListViewModel = TodoListViewModel(todos: todos, totalCount: todos.count)
             viewModel = todoListViewModel
+            print("3")
             view?.update(with: todoListViewModel)
         case.failure:
+            print("2")
             view?.update(with: "Something went wrong")
         }
     }

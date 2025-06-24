@@ -38,6 +38,10 @@ class CoreDataManager {
         saveContext()
     }
     
+    func saveArrayOfTodos() {
+        
+    }
+    
     func deleteTodo(with id: UUID) {
         
     }
@@ -50,7 +54,6 @@ class CoreDataManager {
         let fetchRequest: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
         do {
             let todos = try context.fetch(fetchRequest)
-            print(todos)
             return todos
         } catch {
             print("cant fetch todos: \(error)")

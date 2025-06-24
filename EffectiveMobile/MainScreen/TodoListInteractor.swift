@@ -13,19 +13,21 @@ enum FetchError: Error {
     case unknown
 }
 
+enum CoreDataError: Error {
+    case fetchingError
+    case savingError
+    case NoTodo
+}
+
 //https://dummyjson.com/todos
 protocol ToDoListInteractorProtocol: AnyObject {
     var presenter: ToDoListPresenterProtocol? { get set }
-    func getToDosFromAPI()
+//    func getToDosFromAPI()
     func getTodosFromCoreData()
     func handleDoneTap(at indexPath: IndexPath)
+    func checkForFirstLaunch()
 }
 class TodoListInteractor: ToDoListInteractorProtocol {
-    
-    
-    
-    
-   
    weak var presenter: ToDoListPresenterProtocol?
     
     func getToDosFromAPI() {
@@ -38,9 +40,15 @@ class TodoListInteractor: ToDoListInteractorProtocol {
             }
             do {
                 let entities = try JSONDecoder().decode(TodoListModel.self, from: data)
-                self?.presenter?.interactorDidFetchTodos(with: .success(entities))
-                
+                var counter = 0
+                for entity in entities.todos {
+                    CoreDataManager.shared.createTodo(title: entity.title ?? "Задача № \(counter)", date: Date.now, body: entity.todo)
+                    counter += 1
+                }
+                let taskArray = CoreDataManager.shared.fetchTodos()
+                self?.presenter?.interactorDidFetchTodos(with: .success(taskArray))
             } catch {
+                print(error)
                 self?.presenter?.interactorDidFetchTodos(with: .failure(error))
             }
         }
@@ -48,10 +56,51 @@ class TodoListInteractor: ToDoListInteractorProtocol {
     }
     
     func getTodosFromCoreData() {
-        CoreDataManager.shared.fetchTodos()
+        let tempTodoArray = CoreDataManager.shared.fetchTodos()
+        if tempTodoArray.isEmpty {
+            self.presenter?.interactorDidFetchTodos(with: .failure(FetchError.unknown))
+        } else {
+            self.presenter?.interactorDidFetchTodos(with: .success(tempTodoArray))
+        }
     }
     
     func handleDoneTap(at indexPath: IndexPath) {
         //handle done 
     }
+    
+    func checkForFirstLaunch() {
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if launchedBefore  {
+            print("Not first launch.")
+            let taskArray = CoreDataManager.shared.fetchTodos()
+            
+            if taskArray.isEmpty {
+                DispatchQueue.main.async {
+                    self.presenter?.interactorDidFetchTodos(with: .failure(CoreDataError.NoTodo))
+                    print("no todos")
+                }
+            } else {
+                print("yes todos")
+//                print(todoArray)
+                DispatchQueue.main.async {
+                    self.presenter?.interactorDidFetchTodos(with: .success(taskArray))
+                }
+            }
+        } else {
+            print("First launch, setting UserDefault.")
+            getToDosFromAPI()
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+        }
+    }
 }
+//func checkForFirstLaunch() {
+//    let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+//    if launchedBefore  {
+//        print("Not first launch.")
+//    } else {
+//        print("First launch, setting UserDefault.")
+////            getToDosFromAPI()
+//        UserDefaults.standard.set(true, forKey: "launchedBefore")
+//    }
+//    getToDosFromAPI()
+//}
