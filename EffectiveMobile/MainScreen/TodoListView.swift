@@ -129,7 +129,9 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
     //MARK: protocol methods
     
     func update(with todos: TodoListViewModel?) {
+        print("ww")
         DispatchQueue.main.async {
+            print("jeje")
             self.todos = todos
             self.table.reloadData()
             self.table.isHidden = false

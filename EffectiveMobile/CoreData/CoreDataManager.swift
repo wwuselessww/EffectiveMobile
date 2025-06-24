@@ -29,7 +29,7 @@ class CoreDataManager {
         }
     
     func createTodo(title: String, date: Date, body: String) {
-        var todoEntity = TaskEntity(context: context)
+        let todoEntity = TaskEntity(context: context)
         todoEntity.id = UUID()
         todoEntity.title = title
         todoEntity.bodyText = body
@@ -38,8 +38,12 @@ class CoreDataManager {
         saveContext()
     }
     
-    func deleteTodo(with id: UUID) {
+    func saveArrayOfTodos() {
         
+    }
+
+    
+    func deleteTodo(with id: UUID) {
     }
     
     func updateTodo(with model: TodoViewModel) {
@@ -50,7 +54,6 @@ class CoreDataManager {
         let fetchRequest: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
         do {
             let todos = try context.fetch(fetchRequest)
-            print(todos)
             return todos
         } catch {
             print("cant fetch todos: \(error)")

@@ -14,7 +14,7 @@ struct TodoListModel: Decodable {
 }
 
 struct TodoModel: Decodable {
-    var id: Int
+//    var id: Int
     var todo: String
     var completed: Bool
     var title: String?

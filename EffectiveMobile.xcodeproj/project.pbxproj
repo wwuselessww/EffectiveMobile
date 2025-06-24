@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A2C3D2EB2E0B101D0042D132 /* TaskEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C3D2EA2E0B101D0042D132 /* TaskEntity+CoreDataProperties.swift */; };
+		A2C3D2EC2E0B101D0042D132 /* TaskEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2C3D2E92E0B101D0042D132 /* TaskEntity+CoreDataClass.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		A256055F2E056A7000776731 /* EffectiveMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectiveMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A2C3D2E92E0B101D0042D132 /* TaskEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TaskEntity+CoreDataClass.swift"; path = "EffectiveMobile/CoreData/TaskEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		A2C3D2EA2E0B101D0042D132 /* TaskEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "TaskEntity+CoreDataProperties.swift"; path = "EffectiveMobile/CoreData/TaskEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -45,6 +52,8 @@
 		A25605562E056A7000776731 = {
 			isa = PBXGroup;
 			children = (
+				A2C3D2E92E0B101D0042D132 /* TaskEntity+CoreDataClass.swift */,
+				A2C3D2EA2E0B101D0042D132 /* TaskEntity+CoreDataProperties.swift */,
 				A25605612E056A7000776731 /* EffectiveMobile */,
 				A25605602E056A7000776731 /* Products */,
 			);
@@ -132,6 +141,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2C3D2EB2E0B101D0042D132 /* TaskEntity+CoreDataProperties.swift in Sources */,
+				A2C3D2EC2E0B101D0042D132 /* TaskEntity+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
