@@ -49,6 +49,7 @@ class TodoView: UIViewController, TodoViewProtocol {
     
     private func setupTitle() {
         view.addSubview(titleField)
+        titleField.delegate = self
         titleField.text = presenter?.viewModel?.title
         NSLayoutConstraint.activate([
             titleField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8),
