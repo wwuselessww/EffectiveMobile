@@ -26,9 +26,7 @@ class TodoListPresenter: ToDoListPresenterProtocol {
     weak var view: ToDoListViewProtocol?
     var interactor: ToDoListInteractorProtocol? {
         didSet {
-//            interactor?.getToDosFromAPI()
             interactor?.checkForFirstLaunch()
-//            interactor?.getTodosFromCoreData()
         }
     }
     
@@ -42,8 +40,8 @@ class TodoListPresenter: ToDoListPresenterProtocol {
             dateFormatter.dateFormat = "dd/MM/yyyy"
             let todos = todoModel.map { todo in
                 let date = Date.now
-//                print("1")
                 return TodoViewModel(
+                    id: todo.id,
                     title: todo.title ?? "Task Title" ,
                     image: todo.completed ? "checkmark.circle" : "circle",
                     body: todo.bodyText ?? "no body????",
@@ -53,10 +51,8 @@ class TodoListPresenter: ToDoListPresenterProtocol {
             }
             let todoListViewModel: TodoListViewModel = TodoListViewModel(todos: todos, totalCount: todos.count)
             viewModel = todoListViewModel
-            print("3")
             view?.update(with: todoListViewModel)
         case.failure:
-            print("2")
             view?.update(with: "Something went wrong")
         }
     }

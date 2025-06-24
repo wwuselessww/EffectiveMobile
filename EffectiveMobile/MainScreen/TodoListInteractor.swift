@@ -22,12 +22,11 @@ enum CoreDataError: Error {
 //https://dummyjson.com/todos
 protocol ToDoListInteractorProtocol: AnyObject {
     var presenter: ToDoListPresenterProtocol? { get set }
-//    func getToDosFromAPI()
-    func getTodosFromCoreData()
     func handleDoneTap(at indexPath: IndexPath)
     func checkForFirstLaunch()
 }
 class TodoListInteractor: ToDoListInteractorProtocol {
+    
    weak var presenter: ToDoListPresenterProtocol?
     
     func getToDosFromAPI() {
@@ -53,15 +52,6 @@ class TodoListInteractor: ToDoListInteractorProtocol {
             }
         }
         task.resume()
-    }
-    
-    func getTodosFromCoreData() {
-        let tempTodoArray = CoreDataManager.shared.fetchTodos()
-        if tempTodoArray.isEmpty {
-            self.presenter?.interactorDidFetchTodos(with: .failure(FetchError.unknown))
-        } else {
-            self.presenter?.interactorDidFetchTodos(with: .success(tempTodoArray))
-        }
     }
     
     func handleDoneTap(at indexPath: IndexPath) {
@@ -92,15 +82,5 @@ class TodoListInteractor: ToDoListInteractorProtocol {
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
     }
+    
 }
-//func checkForFirstLaunch() {
-//    let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-//    if launchedBefore  {
-//        print("Not first launch.")
-//    } else {
-//        print("First launch, setting UserDefault.")
-////            getToDosFromAPI()
-//        UserDefaults.standard.set(true, forKey: "launchedBefore")
-//    }
-//    getToDosFromAPI()
-//}

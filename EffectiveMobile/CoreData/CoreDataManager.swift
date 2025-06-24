@@ -29,7 +29,7 @@ class CoreDataManager {
         }
     
     func createTodo(title: String, date: Date, body: String) {
-        var todoEntity = TaskEntity(context: context)
+        let todoEntity = TaskEntity(context: context)
         todoEntity.id = UUID()
         todoEntity.title = title
         todoEntity.bodyText = body
@@ -41,9 +41,9 @@ class CoreDataManager {
     func saveArrayOfTodos() {
         
     }
+
     
     func deleteTodo(with id: UUID) {
-        
     }
     
     func updateTodo(with model: TodoViewModel) {

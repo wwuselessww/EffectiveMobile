@@ -13,6 +13,7 @@ struct TodoListViewModel {
 }
 
 struct TodoViewModel {
+    var id: UUID
     var title: String
     var image: String
     var body: String
