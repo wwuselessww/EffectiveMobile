@@ -21,7 +21,9 @@ protocol ToDoListPresenterProtocol: AnyObject {
     func didDeleteTodo(with id: UUID)
 }
 
-class TodoListPresenter: ToDoListPresenterProtocol {
+class TodoListPresenter: ToDoListPresenterProtocol, TodoCreationProtocol {
+    
+    
     var viewModel: TodoListViewModel?
     var router: ToDoListRouterProtocol?
     weak var view: ToDoListViewProtocol?
@@ -87,5 +89,11 @@ class TodoListPresenter: ToDoListPresenterProtocol {
         viewModel?.todos.removeAll { $0.id == id }
         let updateViewModel: TodoListViewModel = TodoListViewModel(todos: viewModel?.todos ?? [], totalCount: viewModel?.todos.count ?? 0)
         view?.update(with: updateViewModel)
+    }
+    
+    func didCreateNewTodo() {
+        print("trying to create new")
+        interactor?.checkForFirstLaunch()
+        view?.update(with: viewModel)
     }
 }
