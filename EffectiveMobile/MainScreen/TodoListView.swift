@@ -29,6 +29,7 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
         return .init(tableView: table) { tableView, indexPath, itemIdentifier in
             let cell = self.table.dequeueReusableCell(withIdentifier: ToDoCell.identifier, for: indexPath) as? ToDoCell
             cell?.configure(with: itemIdentifier)
+            cell?.delegate = self
             return cell
         }
     }()
@@ -128,7 +129,6 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
     }
     
     @objc func tapNewNoteBtn(_ sender: UIButton) {
-        print("ejej")
         presenter?.didTapCreateNewTodo()
     }
     

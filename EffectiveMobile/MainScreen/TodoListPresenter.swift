@@ -57,7 +57,9 @@ class TodoListPresenter: ToDoListPresenterProtocol {
     
     
     func didTapDone(at indexPath: IndexPath) {
-        interactor?.handleDoneTap(at: indexPath)
+        guard let todo = viewModel?.todos[indexPath.row] else {return}
+        interactor?.handleDoneTap(with: todo.id)
+        view?.update(with: viewModel)
     }
     
     func didTapCreateNewTodo() {

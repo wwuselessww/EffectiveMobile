@@ -22,7 +22,7 @@ enum CoreDataError: Error {
 //https://dummyjson.com/todos
 protocol ToDoListInteractorProtocol: AnyObject {
     var presenter: ToDoListPresenterProtocol? { get set }
-    func handleDoneTap(at indexPath: IndexPath)
+    func handleDoneTap(with id: UUID)
     func checkForFirstLaunch()
     func handleDelete(with id: UUID)
 }
@@ -57,8 +57,11 @@ class TodoListInteractor: ToDoListInteractorProtocol {
         task.resume()
     }
     
-    func handleDoneTap(at indexPath: IndexPath) {
-        //handle done 
+    func handleDoneTap(with id: UUID) {
+        //handle done
+        CoreDataManager.shared.toggleTodo(with: id)
+        let todos = CoreDataManager.shared.fetchTodos()
+        presenter?.interactorDidFetchTodos(with: .success(todos))
     }
     
     func checkForFirstLaunch() {
