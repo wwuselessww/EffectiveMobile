@@ -18,6 +18,7 @@ protocol ToDoListPresenterProtocol: AnyObject {
     func didTapDone(at indexPath: IndexPath)
     func didTapCreateNewTodo()
     func didTapOnCell(at indexPath: IndexPath)
+    func didDeleteTodo(with id: UUID)
 }
 
 class TodoListPresenter: ToDoListPresenterProtocol {
@@ -30,10 +31,7 @@ class TodoListPresenter: ToDoListPresenterProtocol {
         }
     }
     
-   
-    
     func interactorDidFetchTodos(with result: Result<[TaskEntity], Error>) {
-        print("enter")
         switch result {
         case.success(let todoModel):
             let dateFormatter = DateFormatter()
@@ -57,6 +55,7 @@ class TodoListPresenter: ToDoListPresenterProtocol {
         }
     }
     
+    
     func didTapDone(at indexPath: IndexPath) {
         interactor?.handleDoneTap(at: indexPath)
     }
@@ -79,5 +78,12 @@ class TodoListPresenter: ToDoListPresenterProtocol {
             return
         }
         router?.navigateToDetail(from: vc, viewModel: viewModel)
+    }
+    
+    func didDeleteTodo(with id: UUID) {
+        interactor?.handleDelete(with: id)
+        viewModel?.todos.removeAll { $0.id == id }
+        let updateViewModel: TodoListViewModel = TodoListViewModel(todos: viewModel?.todos ?? [], totalCount: viewModel?.todos.count ?? 0)
+        view?.update(with: updateViewModel)
     }
 }

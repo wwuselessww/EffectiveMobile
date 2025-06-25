@@ -12,7 +12,7 @@ struct TodoListViewModel {
     var totalCount: Int
 }
 
-struct TodoViewModel {
+struct TodoViewModel: Hashable {
     var id: UUID
     var title: String
     var image: String

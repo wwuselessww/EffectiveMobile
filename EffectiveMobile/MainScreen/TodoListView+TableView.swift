@@ -6,13 +6,13 @@
 //
 import UIKit
 
-extension TodoListVC: UITableViewDelegate, UITableViewDataSource {
+extension TodoListVC: UITableViewDelegate {
     
     internal func setupTableView() {
         view.addSubview(table)
+        
         table.backgroundColor = .systemBackground
         table.delegate = self
-        table.dataSource = self
         NSLayoutConstraint.activate([
             table.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             table.bottomAnchor.constraint(equalTo: footer.topAnchor),
@@ -21,26 +21,34 @@ extension TodoListVC: UITableViewDelegate, UITableViewDataSource {
         ])
     }
     //MARK: delegate methods
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let todos = todos else { return 0 }
-        return todos.todos.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ToDoCell.identifier, for: indexPath) as? ToDoCell else {
-            return UITableViewCell()
-        }
-        guard let todos = todos else { return cell }
-        let todo = todos.todos[indexPath.row]
-        cell.configure(with: todo)
-        return cell
-    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         presenter?.didTapOnCell(at: indexPath)
     }
     
-   
+    func initialSnapshot() {
+        var snapshot = dataSource.snapshot()
+
+        snapshot.deleteAllItems()
+        snapshot.appendSections([0])
+        if let todos = todoListModel?.todos {
+            snapshot.appendItems(todos, toSection: 0)
+        }
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
     
-    
+    func tableView(_ tableView: UITableView,
+                     trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+                     -> UISwipeActionsConfiguration? {
+          let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
+              guard let id = self?.todoListModel?.todos[indexPath.row].id else { return }
+              self?.presenter?.didDeleteTodo(with: id)
+              completionHandler(true)
+          }
+          deleteAction.backgroundColor = .systemRed
+          let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+          configuration.performsFirstActionWithFullSwipe = true
+          return configuration
+      }
+                         
 }
