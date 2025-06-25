@@ -23,7 +23,8 @@ extension TodoListVC: UITableViewDelegate {
     //MARK: delegate methods
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        presenter?.didTapOnCell(at: indexPath)
+        guard let todo = todoListModel?.todos[indexPath.row] else {return}
+        presenter?.didTapOnCell(with: todo.id)
     }
     
     func initialSnapshot() {
