@@ -37,7 +37,6 @@ class TodoListRouter: ToDoListRouterProtocol {
     }
     
     func navigateToCreateNewToDo(from view: UIViewController) {
-        //navigate to the second view
         guard let todoVC = TodoRouter.start( ).todoEntryPoint else {
             return
         }

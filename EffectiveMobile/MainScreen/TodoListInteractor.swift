@@ -45,7 +45,6 @@ class TodoListInteractor: ToDoListInteractorProtocol {
     }
     
     func handleDoneTap(with id: UUID) {
-        //handle done
         CoreDataManager.shared.toggleTodo(with: id)
         let todos = CoreDataManager.shared.fetchTodos()
         presenter?.interactorDidFetchTodos(with: .success(todos))
@@ -64,7 +63,6 @@ class TodoListInteractor: ToDoListInteractorProtocol {
                 }
             } else {
                 print("yes todos")
-//                print(todoArray)
                 DispatchQueue.main.async {
                     self.presenter?.interactorDidFetchTodos(with: .success(taskArray))
                 }

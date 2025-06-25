@@ -36,7 +36,6 @@ final class TodoListPresenterTests: XCTestCase {
     }
     
     func testInteractorDidFetchTodos_successfulResult_updatesView() {
-        // Arrange
         let mockView = MockTodoListView()
         presenter = TodoListPresenter()
         presenter.view = mockView
@@ -47,11 +46,7 @@ final class TodoListPresenterTests: XCTestCase {
         task.title = "Test Task"
         task.bodyText = "Test Body"
         task.completed = false
-        
-        // Act
         presenter.interactorDidFetchTodos(with: .success([task]))
-        
-        // Assert
         guard let viewModel = mockView.didUpdateWithViewModel else {
             XCTFail("View model was not updated")
             return
@@ -64,15 +59,10 @@ final class TodoListPresenterTests: XCTestCase {
     }
     
     func testInteractorDidFetchTodos_failureResult_updatesViewWithError() {
-        // Arrange
         let mockView = MockTodoListView()
         presenter = TodoListPresenter()
         presenter.view = mockView
-        
-        // Act
         presenter.interactorDidFetchTodos(with: .failure(CoreDataError.NoTodo))
-        
-        // Assert
         XCTAssertEqual(mockView.didUpdateWithError, "Something went wrong")
     }
 

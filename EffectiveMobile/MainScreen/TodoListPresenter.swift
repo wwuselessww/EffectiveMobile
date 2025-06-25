@@ -5,7 +5,6 @@
 //  Created by Alexander Kozharin on 20.06.25.
 //
 
-//import Foundation
 import UIKit
 
 protocol ToDoListPresenterProtocol: AnyObject {

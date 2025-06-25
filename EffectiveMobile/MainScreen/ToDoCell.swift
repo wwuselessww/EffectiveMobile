@@ -30,7 +30,6 @@ class ToDoCell: UITableViewCell {
         l.textColor = .label
         l.numberOfLines = 2
         l.text = "Lorem ipsum dolor sit amet consectetur adipisicing elit."
-//        l.backgroundColor = .red
         return l
     }()
     
@@ -40,7 +39,6 @@ class ToDoCell: UITableViewCell {
         l.font = .systemFont(ofSize: 12, weight: .regular)
         l.textColor = .secondaryLabel
         l.text = "02/10/24"
-//        l.backgroundColor = .green
         return l
     }()
     
@@ -83,7 +81,6 @@ class ToDoCell: UITableViewCell {
             titleLbl.leadingAnchor.constraint(equalTo: doneBtn.trailingAnchor, constant: 8),
             titleLbl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             titleLbl.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-//            titleLbl.heightAnchor.constraint(equalToConstant: 22),
         ])
     }
     
