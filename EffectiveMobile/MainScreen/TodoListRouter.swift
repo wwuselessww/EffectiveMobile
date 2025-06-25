@@ -43,6 +43,7 @@ class TodoListRouter: ToDoListRouterProtocol {
         print("no todo vc")
             return
         }
+        todoVC.presenter?.creationDelegate = self.entry?.presenter as? TodoListPresenter
         view.navigationController?.pushViewController(todoVC, animated: true)
     }
     
