@@ -21,9 +21,6 @@ class CoreDataManager {
                 }
             }
         }
-
-    
-//    var context = NSPersistentContainer(name: "TodoDataModel").viewContext
     var context: NSManagedObjectContext {
             return container.viewContext
         }
@@ -55,8 +52,10 @@ class CoreDataManager {
             context.delete(todo)
             saveContext()
     }
-    func updateTodo(with model: TodoViewModel) {
-        
+    func toggleTodo(with id: UUID) {
+       var todo = fetchTodo(with: id)
+        todo?.completed.toggle()
+        saveContext()
     }
     
     func fetchTodos() -> [TaskEntity] {
