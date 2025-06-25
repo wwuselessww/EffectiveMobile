@@ -30,11 +30,9 @@ extension TodoListVC: UITableViewDelegate {
     func initialSnapshot() {
         var snapshot = NSDiffableDataSourceSnapshot<Int, TodoViewModel>()
         snapshot.appendSections([0])
-        
         if let todos = todoListModel?.todos {
             snapshot.appendItems(todos, toSection: 0)
         }
-        
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
