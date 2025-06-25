@@ -51,5 +51,24 @@ extension TodoListVC: UITableViewDelegate {
           configuration.performsFirstActionWithFullSwipe = true
           return configuration
       }
-                         
+         
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
+            let editAction = UIAction(title: "Edit", image: UIImage(resource: .edit)) { action in
+                print("edit")
+                
+            }
+            let shareAction = UIAction(title: "Share", image: UIImage(resource: .export)) { action in
+                print("Share")
+            }
+            let deleteAction = UIAction(title: "Delete", image: .trash) { action in
+                print("edit")
+                guard let id = self.todoListModel?.todos[indexPath.row].id else { return }
+                self.presenter?.didDeleteTodo(with: id)
+            }
+            
+            return UIMenu(title: "", children: [editAction, shareAction, deleteAction])
+        }
+    }
 }
