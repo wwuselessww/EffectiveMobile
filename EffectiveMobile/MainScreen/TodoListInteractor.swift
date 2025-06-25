@@ -24,8 +24,11 @@ protocol ToDoListInteractorProtocol: AnyObject {
     var presenter: ToDoListPresenterProtocol? { get set }
     func handleDoneTap(at indexPath: IndexPath)
     func checkForFirstLaunch()
+    func handleDelete(with id: UUID)
 }
 class TodoListInteractor: ToDoListInteractorProtocol {
+    
+    
     
    weak var presenter: ToDoListPresenterProtocol?
     
@@ -81,6 +84,10 @@ class TodoListInteractor: ToDoListInteractorProtocol {
             getToDosFromAPI()
             UserDefaults.standard.set(true, forKey: "launchedBefore")
         }
+    }
+    
+    func handleDelete(with id: UUID) {
+        CoreDataManager.shared.deleteTodo(with: id)
     }
     
 }

@@ -40,7 +40,24 @@ extension TodoListVC: UITableViewDelegate, UITableViewDataSource {
         presenter?.didTapOnCell(at: indexPath)
     }
     
-   
-    
-    
+    func tableView(_ tableView: UITableView,
+                     trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+                     -> UISwipeActionsConfiguration? {
+          let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { [weak self] (action, view, completionHandler) in
+              guard let id = self?.todos?.todos[indexPath.row].id else { return }
+              self?.presenter?.didDeleteTodo(with: id)
+//              self?.items.remove(at: indexPath.row)
+              
+              DispatchQueue.main.async {
+                  tableView.deleteRows(at: [indexPath], with: .automatic)
+                  tableView.reloadData()
+              }
+              completionHandler(true)
+          }
+          deleteAction.backgroundColor = .systemRed
+          let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+          configuration.performsFirstActionWithFullSwipe = true
+          return configuration
+      }
+                         
 }

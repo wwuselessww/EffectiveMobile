@@ -37,15 +37,24 @@ class CoreDataManager {
         todoEntity.completed = false
         saveContext()
     }
-    
-    func saveArrayOfTodos() {
+    func fetchTodo(with id: UUID) -> TaskEntity? {
+        let request: NSFetchRequest<TaskEntity> = TaskEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", id.uuidString)
+        do {
+            let todo = try context.fetch(request)
+            return todo.first
+        } catch {
+            print("cant fetch todo: \(error)")
+            return nil
+        }
         
     }
-
     
     func deleteTodo(with id: UUID) {
+            guard let todo = fetchTodo(with: id) else { return }
+            context.delete(todo)
+            saveContext()
     }
-    
     func updateTodo(with model: TodoViewModel) {
         
     }
