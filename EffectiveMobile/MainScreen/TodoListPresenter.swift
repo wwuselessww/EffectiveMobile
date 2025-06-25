@@ -32,7 +32,6 @@ class TodoListPresenter: ToDoListPresenterProtocol {
     }
     
     func interactorDidFetchTodos(with result: Result<[TaskEntity], Error>) {
-        print("enter")
         switch result {
         case.success(let todoModel):
             let dateFormatter = DateFormatter()
@@ -84,6 +83,7 @@ class TodoListPresenter: ToDoListPresenterProtocol {
     func didDeleteTodo(with id: UUID) {
         interactor?.handleDelete(with: id)
         viewModel?.todos.removeAll { $0.id == id }
-        print("deleted")
+        let updateViewModel: TodoListViewModel = TodoListViewModel(todos: viewModel?.todos ?? [], totalCount: viewModel?.todos.count ?? 0)
+        view?.update(with: updateViewModel)
     }
 }

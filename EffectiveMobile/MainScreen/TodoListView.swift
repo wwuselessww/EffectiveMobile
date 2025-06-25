@@ -25,6 +25,14 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
         return t
     }()
     
+    lazy var dataSource: UITableViewDiffableDataSource<Int, TodoViewModel> = {
+        return .init(tableView: table) { tableView, indexPath, itemIdentifier in
+            let cell = self.table.dequeueReusableCell(withIdentifier: ToDoCell.identifier, for: indexPath) as? ToDoCell
+            cell?.configure(with: itemIdentifier)
+            return cell
+        }
+    }()
+    
     private var errorLbl: UILabel = {
         let l = UILabel()
         l.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +64,7 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
         return lbl
     }()
     private var searchController: UISearchController = UISearchController()
-    var todos: TodoListViewModel?
+    var todoListModel: TodoListViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,8 +77,6 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
         setupCreateNewTodoBtn()
         setupTaskCounterLbl()
         setupTableView()
-        
-        
     }
     
     private func setupNavigationBar() {
@@ -129,11 +135,9 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
     //MARK: protocol methods
     
     func update(with todos: TodoListViewModel?) {
-        print("ww")
         DispatchQueue.main.async {
-            print("jeje")
-            self.todos = todos
-            self.table.reloadData()
+            self.todoListModel = todos
+            self.initialSnapshot()
             self.table.isHidden = false
             guard let todos else { return }
             self.taskCountLbl.text = String("\(todos.totalCount) Задач")
@@ -145,7 +149,7 @@ class TodoListVC: UIViewController, ToDoListViewProtocol, ToDoCellDelegate {
             self.errorLbl.text = error
             self.errorLbl.isHidden = false
             self.table.isHidden = true
-            self.todos = nil
+            self.todoListModel = nil
             self.taskCountLbl.text = ""
         }
     }
