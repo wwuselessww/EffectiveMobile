@@ -91,6 +91,8 @@ class TodoListInteractor: ToDoListInteractorProtocol {
     
     func handleDelete(with id: UUID) {
         CoreDataManager.shared.deleteTodo(with: id)
+        let todos = CoreDataManager.shared.fetchTodos()
+        presenter?.interactorDidFetchTodos(with: .success(todos))
     }
     
 }

@@ -69,6 +69,21 @@ class CoreDataManager {
         return []
     }
     
+    func updateTodo(with id: UUID, title: String? = nil, body: String? = nil, date: Date? = nil) {
+        guard let todo = fetchTodo(with: id) else { return }
+        if let title = title {
+            todo.title = title
+        }
+        if let body = body {
+            todo.bodyText = body
+        }
+        if let date = date {
+            todo.date = date
+        }
+        print(todo)
+        saveContext()
+    }
+    
     func saveContext() {
         do {
             try context.save()

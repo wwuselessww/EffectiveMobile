@@ -19,6 +19,7 @@ protocol ToDoListPresenterProtocol: AnyObject {
     func didTapCreateNewTodo()
     func didTapOnCell(with id: UUID)
     func didDeleteTodo(with id: UUID)
+    func didTapEditTodo(with id: UUID)
     func searchTodo(with query: String)
 }
 
@@ -78,10 +79,17 @@ class TodoListPresenter: ToDoListPresenterProtocol, TodoCreationProtocol {
             print("no vc")
             return
         }
-//        guard let viewModel = viewModel?.todos[indexPath.row] else {
-//            print("no view model")
-//            return
-//        }
+        guard let viewModel = viewModel?.todos.filter({$0.id == id}).first else {
+            return
+        }
+        router?.navigateToDetail(from: vc, viewModel: viewModel)
+    }
+    
+    func didTapEditTodo(with id: UUID) {
+        guard let vc = view as? UIViewController else {
+            print("no vc")
+            return
+        }
         guard let viewModel = viewModel?.todos.filter({$0.id == id}).first else {
             return
         }
@@ -90,14 +98,12 @@ class TodoListPresenter: ToDoListPresenterProtocol, TodoCreationProtocol {
     
     func didDeleteTodo(with id: UUID) {
         interactor?.handleDelete(with: id)
-        viewModel?.todos.removeAll { $0.id == id }
-        let updateViewModel: TodoListViewModel = TodoListViewModel(todos: viewModel?.todos ?? [], totalCount: viewModel?.todos.count ?? 0)
-        view?.update(with: updateViewModel)
     }
     
-    func didCreateNewTodo() {
+    func reloadTodos() {
+        print(2)
         interactor?.checkForFirstLaunch()
-        view?.update(with: viewModel)
+        print(3)
     }
     
     func searchTodo(with query: String) {

@@ -28,15 +28,17 @@ extension TodoListVC: UITableViewDelegate {
     }
     
     func initialSnapshot() {
-        var snapshot = dataSource.snapshot()
-
-        snapshot.deleteAllItems()
+        var snapshot = NSDiffableDataSourceSnapshot<Int, TodoViewModel>()
         snapshot.appendSections([0])
+        
         if let todos = todoListModel?.todos {
             snapshot.appendItems(todos, toSection: 0)
         }
+        
         dataSource.apply(snapshot, animatingDifferences: true)
     }
+    
+    
     
     func tableView(_ tableView: UITableView,
                      trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
@@ -55,20 +57,19 @@ extension TodoListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let editAction = UIAction(title: "Edit", image: UIImage(resource: .edit)) { action in
+            let editAction = UIAction(title: "Редактировать", image: UIImage(resource: .edit)) { action in
                 print("edit")
+                guard let id = self.todoListModel?.todos[indexPath.row].id else { return }
+                self.presenter?.didTapEditTodo(with: id)
                 
             }
-            let shareAction = UIAction(title: "Share", image: UIImage(resource: .export)) { action in
-                print("Share")
-            }
-            let deleteAction = UIAction(title: "Delete", image: .trash) { action in
-                print("edit")
+            let deleteAction = UIAction(title: "Удалить", image: .trash, attributes: .destructive) { action in
+                print("delete")
                 guard let id = self.todoListModel?.todos[indexPath.row].id else { return }
                 self.presenter?.didDeleteTodo(with: id)
             }
             
-            return UIMenu(title: "", children: [editAction, shareAction, deleteAction])
+            return UIMenu(title: "", children: [editAction, deleteAction])
         }
     }
 }

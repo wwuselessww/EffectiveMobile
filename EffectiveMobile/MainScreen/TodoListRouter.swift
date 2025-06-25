@@ -46,13 +46,11 @@ class TodoListRouter: ToDoListRouterProtocol {
     }
     
     func navigateToDetail(from view: UIViewController, viewModel: TodoViewModel) {
-
-        guard let todoVC = TodoRouter.start( viewModel).todoEntryPoint else {
+        guard let todoVC = TodoRouter.start(viewModel).todoEntryPoint else {
             return
         }
+        todoVC.presenter?.creationDelegate = self.entry?.presenter as? TodoListPresenter
         view.navigationController?.pushViewController(todoVC, animated: true)
-        
     }
-    
     
 }

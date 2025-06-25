@@ -17,26 +17,29 @@ protocol TodoPresenterProtocol: AnyObject {
 }
 
 protocol TodoCreationProtocol: AnyObject {
-    func didCreateNewTodo()
+    func reloadTodos()
 }
 
 class TodoPresenter: TodoPresenterProtocol {
-   
+    
     var viewModel: TodoViewModel?
     var router: TodoRouterProtocol?
     var interactor: TodoInteractorProtocol?
     weak var view: TodoViewProtocol?
     weak var creationDelegate: TodoCreationProtocol?
+    
     func didTapBack(title: String, body: String) {
-        if viewModel == nil {
+        guard let viewModel = viewModel else {
             interactor?.handleSavingTodo(title: title, body: body)
-            creationDelegate?.didCreateNewTodo()
+            creationDelegate?.reloadTodos()
             print("save")
-        } else {
-//            interactor?.handleEditTodo(title: title, body: body)
-            print("edit")
-            
+            router?.navigateBack()
+            return
         }
+        interactor?.handleEditTodo(id: viewModel.id, title: title, body: body)
+        creationDelegate?.reloadTodos()
+        print("edit")
         router?.navigateBack()
+        print(1)
     }
 }

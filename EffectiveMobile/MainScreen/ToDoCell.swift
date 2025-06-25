@@ -83,7 +83,7 @@ class ToDoCell: UITableViewCell {
             titleLbl.leadingAnchor.constraint(equalTo: doneBtn.trailingAnchor, constant: 8),
             titleLbl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             titleLbl.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 12),
-            titleLbl.heightAnchor.constraint(equalToConstant: 22),
+//            titleLbl.heightAnchor.constraint(equalToConstant: 22),
         ])
     }
     
