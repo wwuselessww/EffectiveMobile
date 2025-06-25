@@ -7,19 +7,6 @@
 
 import Foundation
 
-enum FetchError: Error {
-    case networkError
-    case decodingError
-    case unknown
-}
-
-enum CoreDataError: Error {
-    case fetchingError
-    case savingError
-    case NoTodo
-}
-
-//https://dummyjson.com/todos
 protocol ToDoListInteractorProtocol: AnyObject {
     var presenter: ToDoListPresenterProtocol? { get set }
     func handleDoneTap(with id: UUID)
