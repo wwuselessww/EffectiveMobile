@@ -10,7 +10,8 @@ import UIKit
 
 extension TodoListVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        
+        let query = searchController.searchBar.text ?? ""
+        presenter?.searchTodo(with: query)
     }
     
     internal func setupSearchController() {
@@ -21,5 +22,7 @@ extension TodoListVC: UISearchResultsUpdating {
         definesPresentationContext = true
         searchController.searchResultsUpdater = self
     }
+    
+    
 
 }

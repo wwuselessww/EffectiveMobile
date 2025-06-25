@@ -38,9 +38,7 @@ class TodoListRouter: ToDoListRouterProtocol {
     
     func navigateToCreateNewToDo(from view: UIViewController) {
         //navigate to the second view
-        print("here1")
         guard let todoVC = TodoRouter.start( ).todoEntryPoint else {
-        print("no todo vc")
             return
         }
         todoVC.presenter?.creationDelegate = self.entry?.presenter as? TodoListPresenter
@@ -48,9 +46,8 @@ class TodoListRouter: ToDoListRouterProtocol {
     }
     
     func navigateToDetail(from view: UIViewController, viewModel: TodoViewModel) {
-        print("here2")
+
         guard let todoVC = TodoRouter.start( viewModel).todoEntryPoint else {
-            print("no todo view")
             return
         }
         view.navigationController?.pushViewController(todoVC, animated: true)

@@ -17,8 +17,9 @@ protocol ToDoListPresenterProtocol: AnyObject {
     func interactorDidFetchTodos(with result: Result<[TaskEntity], Error>)
     func didTapDone(at indexPath: IndexPath)
     func didTapCreateNewTodo()
-    func didTapOnCell(at indexPath: IndexPath)
+    func didTapOnCell(with id: UUID)
     func didDeleteTodo(with id: UUID)
+    func searchTodo(with query: String)
 }
 
 class TodoListPresenter: ToDoListPresenterProtocol, TodoCreationProtocol {
@@ -72,13 +73,16 @@ class TodoListPresenter: ToDoListPresenterProtocol, TodoCreationProtocol {
         }
         router?.navigateToCreateNewToDo(from: vc)
     }
-    func didTapOnCell(at indexPath: IndexPath) {
+    func didTapOnCell(with id: UUID) {
         guard let vc = view as? UIViewController else {
             print("no vc")
             return
         }
-        guard let viewModel = viewModel?.todos[indexPath.row] else {
-            print("no view model")
+//        guard let viewModel = viewModel?.todos[indexPath.row] else {
+//            print("no view model")
+//            return
+//        }
+        guard let viewModel = viewModel?.todos.filter({$0.id == id}).first else {
             return
         }
         router?.navigateToDetail(from: vc, viewModel: viewModel)
@@ -92,8 +96,17 @@ class TodoListPresenter: ToDoListPresenterProtocol, TodoCreationProtocol {
     }
     
     func didCreateNewTodo() {
-        print("trying to create new")
         interactor?.checkForFirstLaunch()
         view?.update(with: viewModel)
+    }
+    
+    func searchTodo(with query: String) {
+        guard let todos = viewModel?.todos else {return}
+        var res = todos
+        if !query.isEmpty {
+            res = todos.filter{$0.title.lowercased().contains(query.lowercased())}
+        }
+        let updatedModel = TodoListViewModel(todos: res, totalCount: res.count)
+        view?.update(with: updatedModel)
     }
 }
