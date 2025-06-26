@@ -47,7 +47,8 @@ class TodoListPresenter: ToDoListPresenterProtocol, TodoCreationProtocol {
                     image: todo.completed ? "checkmark.circle" : "circle",
                     body: todo.bodyText ?? "no body????",
                     date: dateFormatter.string(from: date),
-                    btnColor: todo.completed ? .systemYellow : .secondaryLabel
+                    btnColor: todo.completed ? .systemYellow : .secondaryLabel,
+                    strikeThrough: todo.completed
                 )
             }
             let todoListViewModel: TodoListViewModel = TodoListViewModel(todos: todos, totalCount: todos.count)

@@ -19,4 +19,5 @@ struct TodoViewModel: Hashable {
     var body: String
     var date: String
     var btnColor: UIColor
+    var strikeThrough: Bool
 }

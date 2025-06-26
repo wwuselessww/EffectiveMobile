@@ -114,6 +114,7 @@ class ToDoCell: UITableViewCell {
         dateLbl.text = viewModel.date
         doneBtn.setImage(UIImage(systemName: viewModel.image), for: .normal)
         doneBtn.tintColor = viewModel.btnColor
+        titleLbl.setStrikethrough(shouldStrike: viewModel.strikeThrough)
     }
     
     
