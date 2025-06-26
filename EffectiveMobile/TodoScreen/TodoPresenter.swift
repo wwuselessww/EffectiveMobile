@@ -10,6 +10,7 @@ import Foundation
 protocol TodoPresenterProtocol: AnyObject {
     var router: TodoRouterProtocol? {get set}
     var interactor: TodoInteractorProtocol? {get set}
+    var textViewPlaceholder: String {get set}
     var view: TodoViewProtocol? {get set}
     var viewModel: TodoViewModel? {get set}
     func didTapBack(title: String, body: String)
@@ -21,6 +22,8 @@ protocol TodoCreationProtocol: AnyObject {
 }
 
 class TodoPresenter: TodoPresenterProtocol {
+    var textViewPlaceholder: String = "Текст задачи..."
+    
     
     var viewModel: TodoViewModel?
     var router: TodoRouterProtocol?

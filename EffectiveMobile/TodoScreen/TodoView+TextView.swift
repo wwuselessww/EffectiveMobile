@@ -9,7 +9,7 @@ import UIKit
 
 extension TodoView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .lightGray  && textView.text == "Текст задачи..." {
+        if textView.textColor == .lightGray  && textView.text == presenter?.textViewPlaceholder {
             textView.text = nil
             textView.textColor = .label
         }
@@ -17,8 +17,12 @@ extension TodoView: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "Текст задачи..."
-            textView.textColor = .lightGray
+            textView.text = presenter?.textViewPlaceholder
+            if textView.text == presenter?.textViewPlaceholder {
+                textView.textColor = .lightGray
+            } else {
+                textView.textColor = .label
+            }
         }
     }
     

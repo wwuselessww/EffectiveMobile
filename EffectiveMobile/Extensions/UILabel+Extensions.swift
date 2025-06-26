@@ -9,17 +9,22 @@ import UIKit
 
 extension UILabel {
     func setStrikethrough(shouldStrike: Bool) {
+        guard let text = self.text else { return }
+
+        let attributes: [NSAttributedString.Key: Any]
         if shouldStrike {
-            let attributedString = NSAttributedString(
-                string: self.text ?? "",
-                attributes: [
-                    .strikethroughStyle: NSUnderlineStyle.single.rawValue,
-                    .foregroundColor: UIColor.systemGray2
-                ]
-            )
-            self.attributedText = attributedString
+            attributes = [
+                .strikethroughStyle: NSUnderlineStyle.single.rawValue,
+                .foregroundColor: UIColor.systemGray2
+            ]
         } else {
-            self.attributedText = NSAttributedString(string: self.text ?? "")
+            attributes = [
+                .strikethroughStyle: 0,
+                .foregroundColor: self.textColor ?? UIColor.label
+            ]
         }
+
+        let attributedString = NSAttributedString(string: text, attributes: attributes)
+        self.attributedText = attributedString
     }
 }

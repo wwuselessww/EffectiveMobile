@@ -34,7 +34,7 @@ class TodoView: UIViewController, TodoViewProtocol {
         var tv = UITextView()
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.text = "Текст задачи..."
-        tv.textColor = .lightGray
+        tv.textColor = .label
         tv.font = UIFont.systemFont(ofSize: 16)
         return tv
     }()
