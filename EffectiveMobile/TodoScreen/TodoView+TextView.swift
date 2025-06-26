@@ -9,7 +9,7 @@ import UIKit
 
 extension TodoView: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == .lightGray  {
+        if textView.textColor == .lightGray  && textView.text == "Текст задачи..." {
             textView.text = nil
             textView.textColor = .label
         }
